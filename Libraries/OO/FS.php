@@ -63,11 +63,11 @@ class FS {
 		return $this->json ($filepath, ARRAY_N);
 	}
 	
-	public function put ($filepath, $data, $prettify = true) {
+	public function put ($filepath, $data) {
 		$filepath = $this->path ($filepath);
 		
 		if (is_array ($data) || is_object ($data)) {
-			$data = ($prettify) ? json_prettify (json_encode ($data)) : json_encode ($data);
+			$data = json_prettify (json_encode ($data));
 		}
 		
 		@mkdir (dirname ($filepath), 0777, true);
@@ -80,5 +80,22 @@ class FS {
 	public function age ($filepath) {
 		$filepath = $this->path ($filepath);
 		
+	}
+	
+	public function copy ($source, $dest){
+		return( $this->put($dest, $this->raw($source)) !== FALSE );
+	}
+	public function move ($source, $dest){
+		// n
+		$success = $this->copy ($source, $dest);
+		if ($success) {
+			return $this->delete ($source);
+		}
+		
+		return false;
+	}
+	public function delete ($source){
+		$filepath = $this->path($source);
+		return unlink($filepath);
 	}
 }
