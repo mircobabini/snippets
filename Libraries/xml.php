@@ -1,13 +1,14 @@
 <?php
 
-function _xml_single ($singular_name, $parts) {
+function _xml_single ($singular_name, $parts, $format = true) {
 	$rss = _rss ();
 	$xml = $rss->addChild ($singular_name);
+
 	foreach ($parts as $tag => $value) {
 		_xml_add_child ($xml, $tag, $value);
 	}
 	
-	_reply_xml (_format_xml ($rss));
+	return ($format) ? _format_xml ($rss) : $rss->asXML ();
 }
 function _xml_list ($plural_name, $singular_name, $items, $format = true) {
 	$rss = _rss ();

@@ -1,5 +1,4 @@
 <?php
-
 class FS {
 	/**
 	 * @var string The basepath without ending slash
