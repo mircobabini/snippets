@@ -1,4 +1,17 @@
 <?php
+/**
+ * Author: Mirco Babini <mirkolofio@gmail.com>
+ * Version: 1.0.5
+ * 
+ * Changelog
+ *	1.0.0 - it works
+ *	1.0.1 - fixes
+ *	1.0.2 - added copy, move, delete, size
+ *	1.0.3 - added mtime
+ *	1.0.4 - fixes
+ *	1.0.5 - path param == null > return basedir
+ *
+ */
 class FS {
 	/**
 	 * @var string The basepath without ending slash
@@ -26,9 +39,12 @@ class FS {
 	 * @param string $filepath Relative filepath
 	 * @return string
 	 */
-	public function path ($filepath) {
+	public function path ($filepath = null) {
+		if( $filepath === null ){
+			return $this->basedir;
+		}
+		
 		$filepath = '/' . ltrim ($filepath, '/');
-
 		return $this->basedir . $filepath;
 	}
 	/**
@@ -85,7 +101,6 @@ class FS {
 		return( $this->put($dest, $this->raw($source)) !== FALSE );
 	}
 	public function move ($source, $dest){
-		// n
 		$success = $this->copy ($source, $dest);
 		if ($success) {
 			return $this->delete ($source);
@@ -93,8 +108,18 @@ class FS {
 		
 		return false;
 	}
-	public function delete ($source){
-		$filepath = $this->path($source);
+	public function delete ($filepath){
+		$filepath = $this->path($filepath);
 		return unlink($filepath);
+	}
+	public function size ($filepath){
+		$filepath = $this->path($filepath);
+
+		clearstatcache();
+		return filesize($filepath);
+	}
+	public function mtime($filepath){
+		$filepath = $this->path($filepath);
+		return filemtime($filepath);
 	}
 }
