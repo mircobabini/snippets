@@ -1,7 +1,7 @@
 <?php
 /**
  * Author: Mirco Babini <mirkolofio@gmail.com>
- * Version: 1.0.5
+ * Version: 1.0.6
  * 
  * Changelog
  *	1.0.0 - it works
@@ -10,6 +10,7 @@
  *	1.0.3 - added mtime
  *	1.0.4 - fixes
  *	1.0.5 - path param == null > return basedir
+ *	1.0.6 - implemented age method
  *
  */
 class FS {
@@ -93,8 +94,7 @@ class FS {
 		return @file_get_contents ($filepath);
 	}
 	public function age ($filepath) {
-		$filepath = $this->path ($filepath);
-		
+		return time() - $this->mtime($filepath);
 	}
 	
 	public function copy ($source, $dest){
