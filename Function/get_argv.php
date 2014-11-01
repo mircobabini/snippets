@@ -1,20 +1,32 @@
 <?
 /**
  * @return array
+ * @version 2
  */
-function get_argv ()
-{
-	$argvs = array ();
+function get_argv( $key = null ){
+	global $_argvs;
+	if( ! $_argvs ){
+		$_argvs = array();
+		
+		if( isset( $_SERVER['argv'] ) && count( $_SERVER['argv'] ) > 1 ){
+			$argv = $_SERVER['argv'];
+			array_shift( $argv );
 
-	$params = $_SERVER['argv'];
-	if (sizeof ($params) > 1) {
-		array_shift ($params);
-
-		foreach ($params as $param) {
-			list ($key, $value) = explode ("=", $param);
-			$argvs[ $key ] = $value;
+			foreach( $argv as $arg ){
+				parse_str( $arg, $_argvs );
+			}
+		}else{
+			$_argvs = $_GET;
 		}
 	}
 
-	return $argvs;
+	if( $key === null ){
+		return $_argvs;
+	}else{
+		if( isset( $_argvs[ $key ] ) ){
+			return $_argvs[ $key ];
+		}else{
+			return null;
+		}
+	}
 }
