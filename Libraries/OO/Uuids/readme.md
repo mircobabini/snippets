@@ -1,7 +1,7 @@
 # UUIDs
 Module to record hits/view/anything by universal unique id, mainly developed to track users on mobile apps.
 
-### Usage example (for angular, uses [Srv_Api.js](https://gist.github.com/mircobabini/64a0c4720b295f45ae26))
+### Client (AngularJS) example (uses [Srv_Api.js](https://gist.github.com/mircobabini/64a0c4720b295f45ae26))
 -----------------
     angular.module('app.services', [])
     .factory('Api', ['$http', 'Constants', function($http, Constants){
@@ -21,7 +21,7 @@ Module to record hits/view/anything by universal unique id, mainly developed to 
     	}
     })
 
-### Server-side implementation
+### Server-side example
 
     <?php
     require_once 'uuids.php';
