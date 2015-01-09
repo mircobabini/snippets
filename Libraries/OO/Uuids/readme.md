@@ -5,20 +5,23 @@ Module to record hits/view/anything by universal unique id, mainly developed to 
 -----------------
     angular.module('app.services', [])
     .factory('Api', ['$http', 'Constants', function($http, Constants){
-    	 return {
-    	 		hit: function( uuid ){
-    				var uri = Constants.endpoint+'/hit/';
+        return {
+            hit: function( uuid, success, error ){
+                success = success || function(){}
+                error = error || function(){}
+                
+                var uri = Constants.endpoint+'/hit/';
     
-    				$http.get(uri, { params: { uuid: uuid } })
-    					.success(function(){})
-    					.error(function(){});
-    	 		},
-    	 };
+                $http.get(uri, { params: { uuid: uuid } })
+                    .success(success)
+                    .error(error);
+            },
+        };
     }])
     .service('Constants', function(){
-    	return {
-    		endpoint: 'http://example.org/api',
-    	}
+        return {
+            endpoint: 'http://example.org/api',
+        }
     })
 
 ### Server-side example
