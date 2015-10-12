@@ -12,7 +12,7 @@ class Singleton{
 		if( function_exists( 'get_called_class' ) ){
 			return get_called_class();
 		}else{
-			throw new Exception( 'missing function get_called_class, try this fallback: https://github.com/mircobabini/snippets/blob/master/Fallback/get_called_class.php')
+			throw new Exception( 'missing function get_called_class, try this fallback: https://github.com/mircobabini/snippets/blob/master/Fallback/get_called_class.php' );
 		}
 	}
 }
